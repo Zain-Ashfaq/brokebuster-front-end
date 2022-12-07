@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  .movie-list-grid {
+    display: flex;
+    flex-direction: column;
+
+    border: 2px solid blue;
+
+    height: 89vh;
+    padding: 5rem;
+    img {
+      height: 500px;
+      width: auto;
+    }
+  }
+}

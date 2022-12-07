@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+* .navbar {
+  display: flex;
+  border: 2px solid green;
+  height: 10vh;
+}
+* .movie-list {
+  display: grid;
+  grid-template-columns: auto auto;
+  border: 2px solid blue;
+  height: 89vh;
+}
+* .movie {
+  text-align: center;
+}/*# sourceMappingURL=Home.css.map */
