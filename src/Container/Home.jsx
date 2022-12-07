@@ -5,9 +5,13 @@ import MovieTile from "../component/MovieTile";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
+import MultiRangeSlider from "multi-range-slider-react";
+import ReactSlider from "react-slider";
 
 function Home() {
   const [movies, setMovies] = useState([]);
+  const [minValue, set_minValue] = useState(77);
+  const [maxValue, set_maxValue] = useState(200);
 
   const getMovies = async () => {
     let url = "http://localhost:8080/movies";
@@ -20,6 +24,15 @@ function Home() {
     const response = await fetch(url);
     const movieData = await response.json();
     setMovies(movieData);
+  };
+  const getMoviesBasedOnRuntime = async () => {
+    const test1 = minValue;
+    const test2 = maxValue;
+    let url = `http://localhost:8080/movies/${test1}/${test2}`;
+    const response = await fetch(url);
+    const movieData = await response.json();
+    setMovies(movieData);
+    console.log("test", maxValue);
   };
   useEffect(() => {
     getMovies();
@@ -34,6 +47,27 @@ function Home() {
       getMoviesBasedOnGenre(e);
     }
   };
+  const handleInput = (e) => {
+    set_minValue(e.minValue);
+    set_maxValue(e.maxValue);
+
+    console.log(minValue, maxValue);
+  };
+  useEffect(
+    () => {
+      getMoviesBasedOnRuntime();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [minValue]
+  );
+  useEffect(
+    () => {
+      getMoviesBasedOnRuntime();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    [maxValue]
+  );
 
   return (
     <>
@@ -57,6 +91,19 @@ function Home() {
           <Dropdown.Item eventKey="Sci-Fi">Sci-Fi</Dropdown.Item>
         </DropdownButton>
       </div>
+      <div>
+        <MultiRangeSlider
+          min={0}
+          max={300}
+          step={10}
+          minValue={minValue}
+          maxValue={maxValue}
+          onInput={(e) => {
+            handleInput(e);
+          }}
+        />
+      </div>
+      <div></div>
 
       <section className="movie-list">
         {movies.map((movie) => (
