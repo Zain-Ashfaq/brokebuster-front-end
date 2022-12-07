@@ -8,8 +8,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 function Home() {
   const [movies, setMovies] = useState([]);
-  const [movieGenreList, setMovieGenreList] = useState([]);
-  const [genre, setGenre] = useState("");
 
   const getMovies = async () => {
     let url = "http://localhost:8080/movies";
@@ -17,7 +15,7 @@ function Home() {
     const movieData = await response.json();
     setMovies(movieData);
   };
-  const getMoviesBasedOnGenre = async () => {
+  const getMoviesBasedOnGenre = async (genre) => {
     let url = `http://localhost:8080/movies/${genre}`;
     const response = await fetch(url);
     const movieData = await response.json();
@@ -27,15 +25,13 @@ function Home() {
     getMovies();
   }, []);
 
-  console.log(movies);
-  console.log(movieGenreList);
-
-  const handleSelect = (e) => {
-    console.log(e);
-    setGenre(e);
-    getMoviesBasedOnGenre();
+  const handleSelect = async (e) => {
     if (e === "noOption") {
       getMovies();
+    } else {
+      console.log(e);
+
+      getMoviesBasedOnGenre(e);
     }
   };
 
@@ -53,13 +49,17 @@ function Home() {
         >
           <Dropdown.Item eventKey="noOption">Get all movies</Dropdown.Item>
           <Dropdown.Item eventKey="Action">Action</Dropdown.Item>
+          <Dropdown.Item eventKey="Adventure">Adventure</Dropdown.Item>
+          <Dropdown.Item eventKey="Animation">Animation</Dropdown.Item>
+          <Dropdown.Item eventKey="Crime">Crime</Dropdown.Item>
           <Dropdown.Item eventKey="Drama">Drama</Dropdown.Item>
+          <Dropdown.Item eventKey="Fantasy">Fantasy</Dropdown.Item>
+          <Dropdown.Item eventKey="Sci-Fi">Sci-Fi</Dropdown.Item>
         </DropdownButton>
       </div>
 
       <section className="movie-list">
         {movies.map((movie) => (
-          // <p className="movie">{movie.title}</p>
           <MovieTile movie={movie} />
         ))}
       </section>
