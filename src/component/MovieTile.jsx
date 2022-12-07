@@ -12,8 +12,9 @@ const MovieTile = ({ movie }) => {
     posterUrl,
     year,
   } = movie;
+
   return (
-    <div className="movie-list-grid">
+    <div className="movie-list-grid" onClick={() => alert(id)}>
       <p>{title}</p>
       <img src={posterUrl} alt="movie poster"></img>
       <p>Directed by {director}</p>
@@ -22,6 +23,9 @@ const MovieTile = ({ movie }) => {
       <p>Runtime {runtime}</p>
       <p>Year Released {year}</p>
       <p>Genres {genres}</p>
+
+      <p>Edit</p>
+      <p>Delete</p>
     </div>
   );
 };
